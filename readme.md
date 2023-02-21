@@ -7,3 +7,10 @@ This classification exercise is pervasive across fields such as medicine (for ex
 The classification methods that will be covered in this workshop include (i) logistic regression, (ii) linear and quadratic discriminant analysis, (iii) naïve Bayes, (iv) K- nearest neighbours, (v) decision trees, (vi) random forests, (vii) support vector machines. Each of these classification methods will be demonstrated using real and simulated data with the help of open-source software R/python. In the machine learning parlance, these classification methods are also referred to as supervised learning methods.
 
 Some unsupervised learning techniques (mainly, clustering methods) will also be covered in the workshop. The K-means clustering and hierarchical clustering algorithms will be demonstrated through real data. 
+
+Speakers:
+Prof. Sanjeev Sabnis (IITB)
+Prof. Radhendushka Srivastava (IITB)
+Dr. Siddhartha Roy (Industry Expert)
+Teaching Assistant:
+Dr. Jovi D’Silva (CSIR-NIO)
