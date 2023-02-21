@@ -12,11 +12,11 @@ The classification methods that will be covered in this workshop include (i) log
 
 Some unsupervised learning techniques (mainly, clustering methods) will also be covered in the workshop. The K-means clustering and hierarchical clustering algorithms will be demonstrated through real data. 
 
-Speakers:
+** Speakers: **
 1. Prof. Sanjeev Sabnis (IITB)
 2. Prof. Radhendushka Srivastava (IITB)
 3. Dr. Siddhartha Roy (Industry Expert)
 
-Teaching Assistant:
+** Teaching Assistant: **
 1. Dr. Jovi D’Silva (CSIR-NIO)
 
