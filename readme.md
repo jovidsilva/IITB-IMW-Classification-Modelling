@@ -12,5 +12,7 @@ Speakers:
 1. Prof. Sanjeev Sabnis (IITB)
 2. Prof. Radhendushka Srivastava (IITB)
 3. Dr. Siddhartha Roy (Industry Expert)
+
 Teaching Assistant:
 1. Dr. Jovi D’Silva (CSIR-NIO)
+
