@@ -1,3 +1,7 @@
+# IMW - Classification Modelling
+### Venue: Indian Institute of Technology Bombay, Mumbai
+### Dates: 20 Feb 2023 to 25 Feb 2023
+
 ## Description
 
 The word ‘classification’ in the context of statistical modelling refers to a classification of new observations into relevant classes using a statistical decision rule that is built using training data pertaining to a particular phenomenon or a field.
