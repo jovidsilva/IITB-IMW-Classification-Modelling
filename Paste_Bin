@@ -141,14 +141,14 @@ for i, (X, y) in enumerate([dataset_gen()]): # You can also use simulated data
     # Linear Discriminant Analysis
     lda = LinearDiscriminantAnalysis(solver="lsqr", store_covariance=True)
     y_pred_lda = lda.fit(X, y).predict(X)
-    splot = plot_data(lda, X, y, y_pred_lda, fig_index=2 * i + 1)
+    splot = plot_data(lda, X, y, y_pred_lda, fig_index=1)
     plot_lda_cov(lda, splot)
     plt.axis("tight")
 
     # Quadratic Discriminant Analysis
     qda = QuadraticDiscriminantAnalysis(store_covariance=True)
     y_pred_qda = qda.fit(X, y).predict(X)
-    splot = plot_data(qda, X, y, y_pred_qda, fig_index=2 * i + 2)
+    splot = plot_data(qda, X, y, y_pred_qda, fig_index=2)
     plot_qda_cov(qda, splot)
     plt.axis("tight")
 
