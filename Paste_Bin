@@ -41,7 +41,7 @@ plt.cm.register_cmap(cmap=cmap)
 ***************************************************************************************************************************
 
 def plot_data(lda, X, y, y_pred, fig_index):
-    splot = plt.subplot(1, 2, fig_index)
+    splot = plt.subplot(1, 1, fig_index)
     if fig_index == 1:
         plt.title("Linear Discriminant Analysis")
         plt.ylabel("Visualization of Decision Boundaries")
@@ -117,12 +117,7 @@ def plot_ellipse(splot, mean, cov, color):
     splot.add_artist(ell)
     splot.set_xticks(())
     splot.set_yticks(())
-    
-def plot_qda_cov(qda, splot):
-    print("\n\nQDA\n\n Covariance Matrix\n\n",qda.covariance_[0],"\n\n",qda.covariance_[1])
-    plot_ellipse(splot, qda.means_[0], qda.covariance_[0], "red")
-    plot_ellipse(splot, qda.means_[1], qda.covariance_[1], "blue")
-    
+        
 def plot_lda_cov(lda, splot):
     print("LDA\n\n Covariance Matrix\n\n",lda.covariance_,"\n\n",lda.covariance_)
     plot_ellipse(splot, lda.means_[0], lda.covariance_, "red")
@@ -143,13 +138,6 @@ for i, (X, y) in enumerate([dataset_gen()]): # use simulated data
     y_pred_lda = lda.fit(X, y).predict(X)
     splot = plot_data(lda, X, y, y_pred_lda, fig_index=1)
     plot_lda_cov(lda, splot)
-    plt.axis("tight")
-
-    # Quadratic Discriminant Analysis
-    qda = QuadraticDiscriminantAnalysis(store_covariance=True)
-    y_pred_qda = qda.fit(X, y).predict(X)
-    splot = plot_data(qda, X, y, y_pred_qda, fig_index=2)
-    plot_qda_cov(qda, splot)
     plt.axis("tight")
 
 plt.tight_layout()
