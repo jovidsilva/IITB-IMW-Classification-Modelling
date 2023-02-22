@@ -1,4 +1,4 @@
-# Industrial Mathematics Workshop (IMW) - Classification Modelling
+# Industrial Mathematics Workshop on Classification Modelling
 ### Venue: Indian Institute of Technology Bombay, Mumbai
 ### Dates: 20 Feb 2023 to 25 Feb 2023
 
