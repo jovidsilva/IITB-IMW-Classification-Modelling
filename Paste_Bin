@@ -137,7 +137,7 @@ plt.suptitle(
     y=0.98,
     fontsize=15,
 )
-for i, (X, y) in enumerate([dataset_gen()]): # You can also use simulated data
+for i, (X, y) in enumerate([dataset_gen()]): # use simulated data
     # Linear Discriminant Analysis
     lda = LinearDiscriminantAnalysis(solver="lsqr", store_covariance=True)
     y_pred_lda = lda.fit(X, y).predict(X)
