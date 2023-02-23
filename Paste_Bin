@@ -142,3 +142,11 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.92)
 plt.show()
 
+**************************************************************************************************************************
+
+cm = confusion_matrix(y, y_pred_qda, labels=qda.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                              display_labels=qda.classes_)
+disp.plot()
+plt.title("Confusion Matrix for QDA")
+plt.show()
