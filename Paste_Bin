@@ -1,1 +1,148 @@
+from matplotlib import colors
+cmap = colors.LinearSegmentedColormap(
+    "red_blue_classes",
+    {
+        "red": [(0, 1, 1), (1, 0.7, 0.7)],
+        "green": [(0, 0.7, 0.7), (1, 0.7, 0.7)],
+        "blue": [(0, 0.7, 0.7), (1, 1, 1)],
+    },
+)
+plt.cm.register_cmap(cmap=cmap)
+
+**************************************************************************************************************************
+
+def plot_data(lda, X, y, y_pred, fig_index):
+    splot = plt.subplot(1, 2, fig_index)
+    if fig_index == 1:
+        plt.title("Quadratic Discriminant Analysis")
+        plt.ylabel("Visualization of Decision Boundaries")
+    tp = y == y_pred  # True Positive
+    tp0, tp1 = tp[y == 0], tp[y == 1]
+    X0, X1 = X[y == 0], X[y == 1]
+    X0_tp, X0_fp = X0[tp0], X0[~tp0]
+    X1_tp, X1_fp = X1[tp1], X1[~tp1]
+
+    # class 0: dots
+    plt.scatter(X0_tp[:, 0], X0_tp[:, 1], marker=".", color="red")
+    plt.scatter(X0_fp[:, 0], X0_fp[:, 1], marker="x", s=20, color="#990000")  # dark red
+
+    # class 1: dots
+    plt.scatter(X1_tp[:, 0], X1_tp[:, 1], marker=".", color="blue")
+    plt.scatter(
+        X1_fp[:, 0], X1_fp[:, 1], marker="x", s=20, color="#000099"
+    )  # dark blue
+
+    # class 0 and 1 : areas
+    nx, ny = 200, 100
+    x_min, x_max = plt.xlim()
+    y_min, y_max = plt.ylim()
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nx), np.linspace(y_min, y_max, ny))
+    Z = lda.predict_proba(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z[:, 1].reshape(xx.shape)
+    plt.pcolormesh(
+        xx, yy, Z, cmap="red_blue_classes", norm=colors.Normalize(0.0, 1.0), zorder=0
+    )
+    plt.contour(xx, yy, Z, [0.5], linewidths=2.0, colors="white")
+
+    # means
+    plt.plot(
+        lda.means_[0][0],
+        lda.means_[0][1],
+        "*",
+        color="yellow",
+        markersize=15,
+        markeredgecolor="grey",
+    )
+    plt.plot(
+        lda.means_[1][0],
+        lda.means_[1][1],
+        "*",
+        color="yellow",
+        markersize=15,
+        markeredgecolor="grey",
+    )
+
+    return splot
+
+
+def plot_ellipse(splot, mean, cov, color):
+    v, w = linalg.eigh(cov)
+    print('\nEigen Values',v)
+    u = w[0] / linalg.norm(w[0])
+    angle = np.arctan(u[1] / u[0])
+    angle = 180 * angle / np.pi  # convert to degrees
+    # filled Gaussian at 2 standard deviation
+    ell = mpl.patches.Ellipse(
+        mean,
+        2 * v[0] ** 0.5,
+        2 * v[1] ** 0.5,
+        angle=180 + angle,
+        facecolor=color,
+        edgecolor="black",
+        linewidth=2,
+    )
+    ell.set_clip_box(splot.bbox)
+    ell.set_alpha(0.2)
+    splot.add_artist(ell)
+    splot.set_xticks(())
+    splot.set_yticks(())
+    
+def plot_qda_cov(qda, splot):
+    print("\n\nQDA\n\n Covariance Matrix\n\n",qda.covariance_[0],"\n\n",qda.covariance_[1])
+    plot_ellipse(splot, qda.means_[0], qda.covariance_[0], "red")
+    plot_ellipse(splot, qda.means_[1], qda.covariance_[1], "blue")
+    
+def plot_lda_cov(lda, splot):
+    print("LDA\n\n Covariance Matrix\n\n",lda.covariance_,"\n\n",lda.covariance_)
+    plot_ellipse(splot, lda.means_[0], lda.covariance_, "red")
+    plot_ellipse(splot, lda.means_[1], lda.covariance_, "blue")
+    
+**************************************************************************************************************************
+
+def dataset_gen():
+    """Generate 2 Gaussians samples with different covariance matrices"""
+    # Define size and dimension. 
+    n, dim = 600, 2
+    # Set mean vector for class 0. 
+    m_0 = np.array([0, 0]).reshape(2, 1)
+    # Set mean vector for class 1.
+    m_1 = np.array([9, 8]).reshape(2, 1)
+    # Set covariance function for class 0. 
+    K_0 = np.array([[6, 4],
+                    [4, 9]])
+    # Set covariance function for class 1. 
+    K_1 = np.array([[8, -3],
+                    [-3, 4]])
+    # Generate multivariate_normal for class 0.
+    X_0 = np.random.multivariate_normal(mean=m_0.reshape(dim,), cov=K_0, size=n//2)
+    # Generate multivariate_normal for class 1.
+    X_1 = np.random.multivariate_normal(mean=m_1.reshape(dim,), cov=K_1, size=n//2)
+    # Join both classes 
+    X = np.concatenate((X_0, X_1), axis=0)
+    # Generate appropriate class labels
+    # hstack and concatenate do the same thing for this senario
+    y = np.hstack((np.zeros(n//2), np.ones(n//2)))
+    return X, y
+
+**************************************************************************************************************************
+
+
+plt.figure(figsize=(13, 9), facecolor="white")
+plt.suptitle(
+    "Quadratic Discriminant Analysis",
+    y=0.98,
+    fontsize=15,
+)
+for i, (X, y) in enumerate([dataset_gen()]): # You can also use simulated data
+
+    #Quadratic Discriminant Analysis
+    qda = QuadraticDiscriminantAnalysis(store_covariance=True)
+    y_pred_qda = qda.fit(X, y).predict(X)
+    splot = plot_data(qda, X, y, y_pred_qda, fig_index=1)
+    plot_qda_cov(qda, splot)
+    plt.axis("tight")
+
+plt.tight_layout()
+plt.subplots_adjust(top=0.92)
+plt.show()
 
